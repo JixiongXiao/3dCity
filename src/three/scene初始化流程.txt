@@ -1,0 +1,9 @@
+创建一个scene组件，在组件内部开始进行场景初始化
+
+1 新增scene
+2 新增camera
+3 新增rederer
+4 新增controls轨道控制器
+5 动画循环 里面要更新controls，renderer，camera
+6 添加坐标轴
+7 把上述全引入场景组件scene中
