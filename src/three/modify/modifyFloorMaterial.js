@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
 
-export default function modifyCityMaterial(mesh) {
+export default function modifyFloorMaterial(mesh) {
     mesh.material.onBeforeCompile = (shader) => {
         shader.fragmentShader = shader.fragmentShader.replace(
             '#include <dithering_fragment>',
@@ -11,10 +11,9 @@ export default function modifyCityMaterial(mesh) {
             `
         )
         addGradColor(shader, mesh)
-        // addSpread(shader, mesh)
+        addSpread(shader, mesh)
     }
 }
-
 
 export function addGradColor(shader, mesh) {
     mesh.geometry.computeBoundingBox() // 计算整个模型的最高点和最低点组成的立方体
@@ -59,7 +58,7 @@ export function addGradColor(shader, mesh) {
         '//#end',
         `
         vec4 gradColor = gl_FragColor;
-        float gradMix = (vPosition.y + uHeight / 2.0 ) / uHeight;
+        float gradMix = (vPosition.y + uHeight / 6.0 ) / uHeight;
         vec3 gradMixColor = mix(gradColor.xyz, uTopColor, gradMix);
         gl_FragColor = vec4(gradMixColor,1);
         //#end
@@ -96,4 +95,5 @@ export function addSpread(shader, mesh) {
         ease: 'none',
         repeat: -1
     })
+    // console.log(shader.fragmentShader)
 }
