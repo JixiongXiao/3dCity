@@ -12,6 +12,8 @@ export default function modifyFloorMaterial(mesh) {
         )
         addGradColor(shader, mesh)
         addSpread(shader, mesh)
+        addScanLight(shader,mesh)
+        console.log(shader.fragmentShader)
     }
 }
 
@@ -79,14 +81,17 @@ export function addSpread(shader, mesh) {
         `
     )
     shader.fragmentShader = shader.fragmentShader.replace(
+        // spreadRadius拿到的是某一个像素在某一帧到达原点的距离，永远是静态的
         '//#end',
         `
         float spreadRadius = distance(vPosition.xz, uSpreadCenter);
         // 扩散范围的函数
         float spreadIndex = -(spreadRadius - uSpreadTime) * (spreadRadius - uSpreadTime) + uSpreadWidth;
         if(spreadIndex > 0.0) {
-            gl_FragColor = mix(gl_FragColor, vec4(1.0,1.0,1.0,1.0), 1.0);
+            gl_FragColor = mix(gl_FragColor, vec4(1.0,1.0,1.0,1.0), spreadIndex / uSpreadWidth);
         }
+
+        //#end
         `
     )
     gsap.to(shader.uniforms.uSpreadTime, {
@@ -96,4 +101,61 @@ export function addSpread(shader, mesh) {
         repeat: -1
     })
     // console.log(shader.fragmentShader)
+}
+export function addToTopLine(shader,mesh){
+    shader.uniforms.uToTopTime = { value: 0.0 }
+    shader.uniforms.uToTopWidth = { value: 20.0 }
+    shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <common>',
+        `
+        #include <common>
+        uniform float uToTopTime;
+        uniform float uToTopWidth;
+        `
+    )
+    shader.fragmentShader = shader.fragmentShader.replace(
+        '//#end',
+        `
+        float toTopIndex = -(vPosition.y - uToTopTime) * (vPosition.y - uToTopTime) + uToTopWidth;
+        if(toTopIndex > 0.0) {
+            gl_FragColor = mix(gl_FragColor, vec4(1.0,1.0,1.0,1.0), toTopIndex / uToTopWidth);
+        }
+
+        //#end
+        `
+    )
+    gsap.to(shader.uniforms.uToTopTime, {
+        value: 600,
+        duration: 2,
+        ease: 'none',
+        repeat: -1
+    })
+}
+export function addScanLight(shader,mesh) {
+    shader.uniforms.uScanTime = {value: -1500}
+    shader.uniforms.uScanWidth = {value:20.0}
+    shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <common>',
+        `
+        #include <common>
+        uniform float uScanTime;
+        uniform float uScanWidth;
+        `
+    )
+    shader.fragmentShader = shader.fragmentShader.replace(
+        '//#end',
+        `
+        float scanIndex = -(vPosition.x + vPosition.z - uScanTime) * (vPosition.x + vPosition.z - uScanTime) + uScanWidth; 
+        if(scanIndex > 0.0) {
+            gl_FragColor = mix(gl_FragColor, vec4(1.0,1.0,1.0,1.0), scanIndex / uScanWidth);
+        }
+        //#end
+        `
+    )
+    gsap.to(shader.uniforms.uScanTime, {
+        value: 1500,
+        duration: 2,
+        ease: 'none',
+        repeat: -1
+    })
 }
