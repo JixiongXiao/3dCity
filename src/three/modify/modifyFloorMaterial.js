@@ -12,8 +12,7 @@ export default function modifyFloorMaterial(mesh) {
         )
         addGradColor(shader, mesh)
         addSpread(shader, mesh)
-        addScanLight(shader,mesh)
-        console.log(shader.fragmentShader)
+        addScanLight(shader, mesh)
     }
 }
 
@@ -102,7 +101,7 @@ export function addSpread(shader, mesh) {
     })
     // console.log(shader.fragmentShader)
 }
-export function addToTopLine(shader,mesh){
+export function addToTopLine(shader, mesh) {
     shader.uniforms.uToTopTime = { value: 0.0 }
     shader.uniforms.uToTopWidth = { value: 20.0 }
     shader.fragmentShader = shader.fragmentShader.replace(
@@ -131,9 +130,9 @@ export function addToTopLine(shader,mesh){
         repeat: -1
     })
 }
-export function addScanLight(shader,mesh) {
-    shader.uniforms.uScanTime = {value: -1500}
-    shader.uniforms.uScanWidth = {value:20.0}
+export function addScanLight(shader, mesh) {
+    shader.uniforms.uScanTime = { value: -1500 }
+    shader.uniforms.uScanWidth = { value: 20.0 }
     shader.fragmentShader = shader.fragmentShader.replace(
         '#include <common>',
         `

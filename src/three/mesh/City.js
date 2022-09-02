@@ -18,11 +18,17 @@ export default function createCity() {
                     modifyCityMaterial(item)
                 } else if (item.name === 'Layertopography') {
                     const cityMaterial = new THREE.MeshBasicMaterial({
-                        color: new THREE.Color(0x0c0e6f),
-                        wireframe: true
+                        color: new THREE.Color(0x0c0e6f)
                     })
                     item.material = cityMaterial
                     modifyFloorMaterial(item)
+                } else if (item.name === 'lake') {
+                    const waterMaterial = new THREE.MeshBasicMaterial({
+                        color: new THREE.Color(0x0c0e6f),
+                        side: THREE.DoubleSide
+                    })
+                    item.material = waterMaterial
+                    console.log(item)
                 }
 
             }

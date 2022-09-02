@@ -11,9 +11,9 @@ export default function modifyCityMaterial(mesh) {
             `
         )
         addGradColor(shader, mesh)
-        // addSpread(shader, mesh)
-        addToTopLine(shader,mesh)
-        addScanLight(shader,mesh)
+        addSpread(shader, mesh)
+        addToTopLine(shader, mesh)
+        addScanLight(shader, mesh)
     }
 }
 
@@ -102,9 +102,9 @@ export function addSpread(shader, mesh) {
         repeat: -1
     })
 }
-export function addScanLight(shader,mesh) {
-    shader.uniforms.uScanTime = {value: -1500}
-    shader.uniforms.uScanWidth = {value:20.0}
+export function addScanLight(shader, mesh) {
+    shader.uniforms.uScanTime = { value: -1500 }
+    shader.uniforms.uScanWidth = { value: 20.0 }
     shader.fragmentShader = shader.fragmentShader.replace(
         '#include <common>',
         `
@@ -131,7 +131,7 @@ export function addScanLight(shader,mesh) {
         repeat: -1
     })
 }
-export function addToTopLine(shader,mesh){
+export function addToTopLine(shader, mesh) {
     shader.uniforms.uToTopTime = { value: 0.0 }
     shader.uniforms.uToTopWidth = { value: 20.0 }
     shader.fragmentShader = shader.fragmentShader.replace(
@@ -154,7 +154,7 @@ export function addToTopLine(shader,mesh){
     )
     gsap.to(shader.uniforms.uToTopTime, {
         value: 600,
-        duration: 2,
+        duration: 3,
         ease: 'none',
         repeat: -1
     })
