@@ -4,6 +4,7 @@ import scene from '../scene'
 import modifyCityMaterial from '../modify/modifyCityMaterial'
 import modifyFloorMaterial from '../modify/modifyFloorMaterial'
 import modifyWaterMaterial from '../modify/modifyWaterMaterial'
+import FlyLineShader from './FlyLineShader'
 
 export default function createCity() {
     const gltfLoader = new GLTFLoader()
@@ -34,5 +35,10 @@ export default function createCity() {
         scene.add(gltf.scene)
 
     })
+
+    // 添加着色器飞线
+    const flyLineShader = new FlyLineShader()
+    scene.add(flyLineShader.mesh)
+
 
 }
