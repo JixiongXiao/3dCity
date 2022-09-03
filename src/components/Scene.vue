@@ -30,11 +30,9 @@ scene.add(camera)
 scene.add(axesHelper)
 // scene.add(controls)
 createMesh()
-
-
+ animate()
 onMounted(()=>{
     sceneDiv.value.appendChild(renderer.domElement)
-    animate()
 })
 
 </script>

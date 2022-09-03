@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import scene from '../scene'
 import modifyCityMaterial from '../modify/modifyCityMaterial'
 import modifyFloorMaterial from '../modify/modifyFloorMaterial'
+import modifyWaterMaterial from '../modify/modifyWaterMaterial'
 
 export default function createCity() {
     const gltfLoader = new GLTFLoader()
@@ -12,23 +13,20 @@ export default function createCity() {
             if (item.type == 'Mesh') {
                 if (item.name === 'Layerbuildings') {
                     const cityMaterial = new THREE.MeshBasicMaterial({
-                        color: new THREE.Color(0x0c0e6f)
+                        color: new THREE.Color(0x0c0e6f),
+                        visible: true
                     })
                     item.material = cityMaterial
                     modifyCityMaterial(item)
                 } else if (item.name === 'Layertopography') {
                     const cityMaterial = new THREE.MeshBasicMaterial({
-                        color: new THREE.Color(0x0c0e6f)
+                        color: new THREE.Color(0x0c0e6f),
+                        visible: true
                     })
                     item.material = cityMaterial
                     modifyFloorMaterial(item)
                 } else if (item.name === 'lake') {
-                    const waterMaterial = new THREE.MeshBasicMaterial({
-                        color: new THREE.Color(0x0c0e6f),
-                        side: THREE.DoubleSide
-                    })
-                    item.material = waterMaterial
-                    console.log(item)
+                    modifyWaterMaterial(item)
                 }
 
             }
