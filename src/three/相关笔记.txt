@@ -17,3 +17,12 @@
 修改模型实现渐变颜色
 1 mesh.material.onBeforeCompile 可以给该方法赋值一个函数，函数会有一个内置参数就是模型的shader
 2 获取模型最低和最高的位置，就可以计算出高度差，通过这个高度差换算成0-1，就是着色器需要的值
+
+着色器实现飞线的方式
+首先通过CatmullRomCurve3生成曲线
+通过curve的getPoints获取由这个曲线生成得点的数组，getPoints可以输入参数代表生成多少给点
+然后用BufferGeometry的setFromPoints方法，把刚才获取的potins传入，就获得了geometry
+再创建着色器材质，通过这个geometry和材质通过构造函数Points生成点材质mesh，
+此时我们获取到由1000点组成的曲线形的Potins材质的mesh
+然后开始设置着色器，
+该动画分成两个步骤，vsize小于500和大于500时动画不同，
