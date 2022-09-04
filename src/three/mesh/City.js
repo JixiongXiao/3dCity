@@ -5,10 +5,14 @@ import modifyCityMaterial from '../modify/modifyCityMaterial'
 import modifyFloorMaterial from '../modify/modifyFloorMaterial'
 import modifyWaterMaterial from '../modify/modifyWaterMaterial'
 import FlyLineShader from './FlyLineShader'
-import LightRadar from './LigthRadar'
+import LightRadar from './LightRadar'
 import MeshLine from './MeshLine'
 import LigthWall from './LightWall'
+import Fire from './Fire'
 
+
+var lakeMesh = null
+var fireMesh = null
 
 export default function createCity() {
     const gltfLoader = new GLTFLoader()
@@ -37,6 +41,8 @@ export default function createCity() {
                     modifyFloorMaterial(item)
                 } else if (item.name === 'lake') {
                     modifyWaterMaterial(item)
+                    lakeMesh = item
+                    console.log(lakeMesh)
                 }
 
             }
@@ -46,14 +52,22 @@ export default function createCity() {
     })
 
     // 添加着色器飞线
-    const flyLineShader = new FlyLineShader()
-    scene.add(flyLineShader.mesh)
+    // const flyLineShader = new FlyLineShader()
+    // scene.add(flyLineShader.mesh)
     // 添加雷达
-    const lightRadar = new LightRadar()
-    scene.add(lightRadar.mesh)
+    // const lightRadar = new LightRadar()
+    // scene.add(lightRadar.mesh)
 
     // 添加光墙
-    const ligthWall = new LigthWall()
-    scene.add(ligthWall.mesh)
+    // const ligthWall = new LigthWall()
+    // scene.add(ligthWall.mesh)
 
+    // 添加火焰
+    // const fire = new Fire()
+    // scene.add(fire.mesh)
+    // fireMesh = fire.mesh
+}
+
+export function meshUpdate(time) {
+    lakeMesh.material.uniforms.uTime.value = time
 }

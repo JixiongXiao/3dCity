@@ -4,8 +4,8 @@ import vertexShader from '@/shader/radar/vertex.glsl'
 import fragmentShader from '@/shader/radar/fragment.glsl'
 
 export default class LightRadar {
-    constructor(radius = 2, position = { x: -5, z: 3 }, color = 0xff0000) {
-        this.geometry = new THREE.PlaneBufferGeometry(radius, radius)
+    constructor(position = { x: -5, z: 3 }, color = 0xff0000) {
+        this.geometry = new THREE.PlaneBufferGeometry(2, 2)
         this.material = new THREE.ShaderMaterial({
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
@@ -29,5 +29,11 @@ export default class LightRadar {
             repeat: -1,
             ease: "none",
         });
+    }
+    remove() {
+        this.mesh.remove();
+        this.mesh.removeFromParent();
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
     }
 }

@@ -10,19 +10,16 @@ export default class LightWall {
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             side: THREE.DoubleSide,
-            transparent: true,
-            uniforms: {
-                uHeight: {
-                    value: 0
-                }
-            }
+            transparent: true
         })
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.position.set(position.x, 1, position.z)
         this.mesh.geometry.computeBoundingBox()
         const { max, min } = this.mesh.geometry.boundingBox
         const uHeight = max.y - min.y
-        this.material.uniforms.uHeight.value = uHeight
+        this.material.uniforms.uHeight = {
+            value: uHeight
+        }
         gsap.to(this.mesh.scale, {
             x: length,
             z: length,
@@ -30,5 +27,11 @@ export default class LightWall {
             repeat: -1,
             yoyo: true
         })
+    }
+    remove() {
+        this.mesh.remove();
+        this.mesh.removeFromParent();
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
     }
 }
