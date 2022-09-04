@@ -4,7 +4,7 @@ import vertexShader from '@/shader/flyLineShader/vertex.glsl'
 import fragmentShader from '@/shader/flyLineShader/fragment.glsl'
 
 export default class FlyLineShader {
-    constructor() {
+    constructor(position = { x: 0, z: 0 }, color = 0x00ffff) {
         this.linePoint = [
             new THREE.Vector3(0, 0, 0),
             new THREE.Vector3(5, 4, 0),
@@ -48,5 +48,11 @@ export default class FlyLineShader {
             repeat: -1,
             ease: 'none'
         })
+    }
+    remove() {
+        this.mesh.remove();
+        this.mesh.removeFromParent();
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
     }
 }

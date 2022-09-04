@@ -5,6 +5,10 @@ import modifyCityMaterial from '../modify/modifyCityMaterial'
 import modifyFloorMaterial from '../modify/modifyFloorMaterial'
 import modifyWaterMaterial from '../modify/modifyWaterMaterial'
 import FlyLineShader from './FlyLineShader'
+import LightRadar from './LigthRadar'
+import MeshLine from './MeshLine'
+import LigthWall from './LightWall'
+
 
 export default function createCity() {
     const gltfLoader = new GLTFLoader()
@@ -19,6 +23,11 @@ export default function createCity() {
                     })
                     item.material = cityMaterial
                     modifyCityMaterial(item)
+                    // 添加建筑边框
+                    const meshLine = new MeshLine(item.geometry)
+                    const scale = item.scale.x * 1.001
+                    meshLine.mesh.scale.set(scale, scale, scale)
+                    scene.add(meshLine.mesh)
                 } else if (item.name === 'Layertopography') {
                     const cityMaterial = new THREE.MeshBasicMaterial({
                         color: new THREE.Color(0x0c0e6f),
@@ -39,6 +48,12 @@ export default function createCity() {
     // 添加着色器飞线
     const flyLineShader = new FlyLineShader()
     scene.add(flyLineShader.mesh)
+    // 添加雷达
+    // const lightRadar = new LightRadar()
+    // scene.add(lightRadar.mesh)
 
+    // 添加光墙
+    const ligthWall = new LigthWall()
+    scene.add(ligthWall.mesh)
 
 }
