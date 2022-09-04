@@ -4,7 +4,7 @@ import vertexShader from '@/shader/radar/vertex.glsl'
 import fragmentShader from '@/shader/radar/fragment.glsl'
 
 export default class LightRadar {
-    constructor(radius = 2, position = { x: 0, z: 0 }, color = 0xff0000) {
+    constructor(radius = 2, position = { x: -5, z: 3 }, color = 0xff0000) {
         this.geometry = new THREE.PlaneBufferGeometry(radius, radius)
         this.material = new THREE.ShaderMaterial({
             vertexShader: vertexShader,
@@ -21,8 +21,8 @@ export default class LightRadar {
             }
         })
         this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.position.set(position.x, 1, position.z)
-        this.mesh.rotation.x = -Math.PT / 2
+        this.mesh.position.set(position.x, 2, position.z)
+        this.mesh.rotation.x = -Math.PI / 2
         gsap.to(this.material.uniforms.uTime, {
             value: 1,
             duration: 1,
